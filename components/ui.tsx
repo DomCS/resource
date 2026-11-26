@@ -148,7 +148,6 @@ export function Tag({
           borderColor: colors.line,
         },
         color && {
-
           backgroundColor: color,
           borderWidth: 1,
           borderColor: colors.line,
@@ -176,14 +175,13 @@ export function Tag({
 }
 export const s = StyleSheet.create({
   page: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 18, paddingBottom: 36,  },
+  content: { padding: 18, paddingBottom: 36 },
   heading: {
     fontSize: 27,
     fontWeight: "800",
     color: colors.text,
     marginBottom: 5,
     letterSpacing: -0.5,
-    
   },
   muted: { color: colors.muted, fontSize: 13, lineHeight: 19 },
   card: {
@@ -200,7 +198,6 @@ export const s = StyleSheet.create({
     fontSize: 12,
     fontWeight: "700",
     marginBottom: 6,
-    
   },
   input: {
     borderWidth: 1,
@@ -226,4 +223,5 @@ export const s = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", flexWrap: "wrap" },
   title: { color: colors.text, fontSize: 16, fontWeight: "800" },
   small: { color: colors.muted, fontSize: 12, lineHeight: 18 },
+  compact: { color: colors.muted, margin: 0, padding: 0, lineHeight: 3, width: "max-content"},
 });

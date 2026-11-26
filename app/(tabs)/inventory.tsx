@@ -1,7 +1,7 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
 
-import { Alert, Text, View } from "react-native";
+import { Alert, Linking, Text, View } from "react-native";
+import PageNavigation from "../../components/PageNavigation";
 import {
   Button,
   Card,
@@ -12,13 +12,13 @@ import {
   colors,
   s,
 } from "../../components/ui";
-import PageNavigation from "../../components/PageNavigation"
 import { useAppData } from "../../context/AppDataContext";
 import { InventoryItem, uid } from "../../lib/types";
 const blank = (): InventoryItem => ({
   id: uid(),
   name: "",
   sku: "",
+  link: "",
   quantity: 0,
   minimum: 0,
   unit: "each",
@@ -47,13 +47,20 @@ export default function Inventory() {
     }));
     setForm(null);
   };
+  const openWebsite = async (link) => {
+    const url = link;
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    }
+  };
   return (
     <Page>
       <Heading
         title="Inventory"
         subtitle="Track parts, materials, stock levels, and storage locations"
       />
-         {PageNavigation()}
+      {PageNavigation()}
       <Button title="＋ Add inventory item" onPress={() => setForm(blank())} />
       {form && (
         <Card>
@@ -68,6 +75,11 @@ export default function Inventory() {
             onChangeText={(v) => set("name", v)}
           />
           <View style={s.row}>
+            <Field
+              label="online product link"
+              value={form.link}
+              onChangeText={(v) => set("link", v)}
+            />
             <Field
               label="SKU / part number"
               value={form.sku}
@@ -121,7 +133,16 @@ export default function Inventory() {
         <Card key={item.id}>
           <View style={[s.row, { justifyContent: "space-between" }]}>
             <View style={{ flex: 1 }}>
-              <Text style={s.title}>{item.name}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={s.title}>{item.name}</Text>
+                <a
+                  target="_blank"
+                  href={item.link}
+                  style={{ ...s.small, ...s.compact }}
+                >
+                  {item.link || "No link"}
+                </a>
+              </View>
               <Text style={s.small}>
                 {item.sku || "No SKU"} · {item.location || "No location"}
               </Text>

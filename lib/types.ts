@@ -63,6 +63,7 @@ export type Job = {
 export type InventoryItem = {
   id: string;
   name: string;
+  link: string;
   sku: string;
   quantity: number;
   minimum: number;
